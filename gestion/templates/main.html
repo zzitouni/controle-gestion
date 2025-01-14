@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  .plus-icon {
+  /* position: absolute;
+  top: 70%;
+  left: 50%; */
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.plus-icon i {
+  color: #333; /* Adjust icon color as needed */
+  font-size: 34px;
+}
+
+.plus-icon:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+</style>
+
+<style>
+  
+    .form-section {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    input, select, textarea {
+        width: 100%;
+        padding: 8px;
+        margin-top: 2px;
+        box-sizing: border-box;
+    }
+
+    button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+  <div class="container mt-4">
+      <div class="row">
+      <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
+        <a href="{% url 'submission_list' %}" class="card-link text-decoration-none">
+          <div class="card card-stats" style="min-height: 200px; background-color: rgba(13, 58, 238, 0.7)">
+            <div class="card-body text-center d-flex flex-column justify-content-between">
+              <h5 class="card-title font-weight-bold h1 text-white text-uppercase mb-0">Clients et CA</h5>
+              <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow ml-auto">
+                <i class="fas fa-users"></i>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
+        <a href="{% url 'submission_list' %}" class="card-link text-decoration-none">
+          <div class="card card-stats" style="min-height: 200px; background-color: rgba(13, 58, 238, 0.7)">
+            <div class="card-body text-center d-flex flex-column justify-content-between">
+              <h5 class="card-title font-weight-bold h1 text-white text-uppercase mb-0"> Stocks</h5>
+              <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow ml-auto">
+                <i class="fas fa-search"></i>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+    
+         <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
+          <a href="{% url 'submission_list' %}" class="card-link text-decoration-none">
+            <div class="card card-stats" style="min-height: 200px; background-color: rgba(13, 58, 238, 0.7);">
+              <div class="card-body text-center d-flex flex-column justify-content-between">
+                <h5 class="card-title font-weight-bold h1 text-white text-uppercase mb-0">IMMO FI</h5>
+                <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow ml-auto">
+                  <i class="fas fa-chart-bar text-white"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+    
+
+      
+
+     
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
+          <a href="{% url 'submission_list' %}" class="card-link text-decoration-none">
+            <div class="card card-stats" style="min-height: 200px; background-color: rgba(13, 58, 238, 0.7);">
+              <div class="card-body text-center d-flex flex-column justify-content-between">
+                <h5 class="card-title font-weight-bold h1 text-white text-uppercase mb-0">PMA</h5>
+                <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow ml-auto">
+                  <i class="fas fa-chart-bar text-white"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+     
+
+      {% comment %} {% if user.role == 'admin' %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
+          <a href="{% url 'dashboardadmin' %}" class="card-link text-decoration-none">
+            <div class="card card-stats" style="min-height: 200px; background-color: rgba(13, 58, 238, 0.7);">
+              <div class="card-body text-center d-flex flex-column justify-content-between">
+                <h5 class="card-title font-weight-bold h1 text-white text-uppercase mb-0"></h5>
+                <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow ml-auto">
+                  <i class="fas fa-chart-bar text-white"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endif %} {% endcomment %}
+    </div>
+
+     
+  </div>
+  
+
+
+
+
+  </div>
+ 
+{% endblock %}

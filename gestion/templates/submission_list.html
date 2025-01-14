@@ -1,0 +1,329 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    /* Button styling */
+    button {
+        display: block;
+        width: 10%;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Table styling */
+    .table {
+        width: 100%;
+        margin: 20px 0;
+        border-collapse: collapse;
+    }
+
+    .table th, .table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+
+    /* Modal styling */
+    .editSubmissionModal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60%;
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-content {
+        text-align: center;
+        max-height: 100%;
+        overflow-y: auto;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+</style>
+
+<div class="container mt-4">
+    <a href="{% url 'submission_create' %}" class="card-link text-decoration-none">
+        <button>Add New</button>
+    </a>
+    <h1>Financial Control Submissions</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Grand Livre Status</th>
+                <th>Balance Comptes Status</th>
+                <th>Exhaustivité Pièces Status</th>
+                <th>Titres Participation Status</th>
+                <th>Comptes Filiales Status</th>
+                <th>General Comments</th>
+                <th>Conclusion</th>
+                <th>Submitted At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if submissions %}
+            {% for submission in submissions %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ submission.grand_livre_status }}</td>
+                <td>{{ submission.balance_comptes_status }}</td>
+                <td>{{ submission.exhaustivite_pieces_status }}</td>
+                <td>{{ submission.titres_participation_status }}</td>
+                <td>{{ submission.comptes_filiales_status }}</td>
+                <td>{{ submission.general_comments }}</td>
+                <td>{{ submission.conclusion }}</td>
+                <td>{{ submission.created_at }}</td>
+                <td>
+                    <button onclick="openModal('{{ submission.id }}')" style="color: blue; background-color: transparent; border: none;">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    {% if user.role == "consultant" %}
+                     <button onclick="openEditModal('{{ submission.id }}')" style="color: green; background-color: transparent; border: none;">
+                        <i class="fas fa-edit"></i>
+                    </button>
+
+                      <button onclick="openDeleteModal('{{ submission.id }}')" style="color: red; background-color: transparent; border: none;">
+                        <i class="fas fa-trash"></i>
+                    </button>
+
+                    {% endif %}
+
+                     {% if user.role == "responsable" or user.role == "admin" %}
+                      {% if not submission.requete.completed %}
+                      <button onclick="confirmRequete('{{ submission.requete.id }}')" style="color: orange; background-color: transparent; border: none;">
+                        <i class="fas fa-check"></i>
+                        {% else %}
+                         <a href="{% url 'submission_download_pdf' submission.id %}" style="color: purple; background-color: transparent; border: none;">
+                            <i class="fas fa-download"></i>
+                        </a>
+                        {% endif %}
+
+                    {% endif %}
+
+
+                </td>
+            </tr>
+
+            <!-- Modal for viewing submission details -->
+            <div id="editSubmissionModal{{ submission.id }}" class="modal editSubmissionModal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('{{ submission.id }}')">&times;</span>
+                    <div class="card-body">
+                        <form>
+                            <h6 class="heading-small text-muted mb-4">Submission Details</h6>
+                            <div class="pl-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Grand Livre Status</label>
+                                            <input type="text" class="form-control" value="{{ submission.grand_livre_status }}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Balance Comptes Status</label>
+                                            <input type="text" class="form-control" value="{{ submission.balance_comptes_status }}" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Exhaustivité Pièces Status</label>
+                                            <input type="text" class="form-control" value="{{ submission.exhaustivite_pieces_status }}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Titres Participation Status</label>
+                                            <input type="text" class="form-control" value="{{ submission.titres_participation_status }}" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Comptes Filiales Status</label>
+                                            <input type="text" class="form-control" value="{{ submission.comptes_filiales_status }}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label">General Comments</label>
+                                            <textarea class="form-control" rows="4" readonly>{{ submission.general_comments }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-control-label">Conclusion</label>
+                                    <textarea class="form-control" rows="4" readonly>{{ submission.conclusion }}</textarea>
+                                </div>
+                            </div>
+                        </form>
+
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <!-- Edit Modal -->
+            <div id="editModal{{ submission.id }}" class="modal editModal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeEditModal('{{ submission.id }}')">&times;</span>
+                    <div class="card-body">
+                        <form id="editForm{{ submission.id }}" method="post" action="{% url 'submission_update' submission.id %}">
+                            {% csrf_token %}
+                            <h6 class="heading-small text-muted mb-4">Edit Submission</h6>
+                            <div class="pl-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-grand-livre-status{{ submission.id }}">Grand Livre Status</label>
+                                    <input name="grand_livre_status" type="text" id="input-grand-livre-status{{ submission.id }}" class="form-control" value="{{ submission.grand_livre_status }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-balance-comptes-status{{ submission.id }}">Balance Comptes Status</label>
+                                    <input name="balance_comptes_status" type="text" id="input-balance-comptes-status{{ submission.id }}" class="form-control" value="{{ submission.balance_comptes_status }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-exhaustivite-pieces-status{{ submission.id }}">Exhaustivité Pièces Status</label>
+                                    <input name="exhaustivite_pieces_status" type="text" id="input-exhaustivite-pieces-status{{ submission.id }}" class="form-control" value="{{ submission.exhaustivite_pieces_status }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-titres-participation-status{{ submission.id }}">Titres Participation Status</label>
+                                    <input name="titres_participation_status" type="text" id="input-titres-participation-status{{ submission.id }}" class="form-control" value="{{ submission.titres_participation_status }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-comptes-filiales-status{{ submission.id }}">Comptes Filiales Status</label>
+                                    <input name="comptes_filiales_status" type="text" id="input-comptes-filiales-status{{ submission.id }}" class="form-control" value="{{ submission.comptes_filiales_status }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-general-comments{{ submission.id }}">General Comments</label>
+                                    <textarea name="general_comments" id="input-general-comments{{ submission.id }}" rows="4" class="form-control">{{ submission.general_comments }}</textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-conclusion{{ submission.id }}">Conclusion</label>
+                                    <textarea name="conclusion" id="input-conclusion{{ submission.id }}" rows="4" class="form-control">{{ submission.conclusion }}</textarea>
+                                </div>
+
+                                <div style="text-align: center; margin: 20px;">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Edit Modal -->
+
+            <!-- Delete Modal -->
+            <div id="deleteModal{{ submission.id }}" class="modal deleteModal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeDeleteModal('{{ submission.id }}')">&times;</span>
+                    <div class="card-body">
+                        <h4>Are you sure you want to delete this submission?</h4>
+                        <form id="deleteForm{{ submission.id }}" method="post" action="{% url 'submission_delete' submission.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Confirm</button>
+                            <button type="button" class="btn btn-secondary" onclick="closeDeleteModal('{{ submission.id }}')">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Confirm Requete Modal -->
+            <div id="confirmRequeteModal{{ submission.requete.id }}" class="modal confirmRequeteModal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeConfirmRequeteModal('{{ submission.requete.id }}')">&times;</span>
+                    <div class="card-body">
+                        <h4>Are you sure you want to confirm this Requete?</h4>
+                        <form id="confirmRequeteForm{{ submission.requete.id }}" method="post" action="{% url 'requete_confirm' submission.requete.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Confirm</button>
+                            <button type="button" class="btn btn-secondary" onclick="closeConfirmRequeteModal('{{ submission.requete.id }}')">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="10" class="text-center">No submissions available.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function openModal(submissionId) {
+        document.getElementById('editSubmissionModal' + submissionId).style.display = 'block';
+    }
+
+    function closeModal(submissionId) {
+        document.getElementById('editSubmissionModal' + submissionId).style.display = 'none';
+    }
+
+    function openEditModal(submissionId) {
+        document.getElementById('editModal' + submissionId).style.display = 'block';
+    }
+
+    function closeEditModal(submissionId) {
+        document.getElementById('editModal' + submissionId).style.display = 'none';
+    }
+
+       function openDeleteModal(submissionId) {
+        document.getElementById('deleteModal' + submissionId).style.display = 'block';
+    }
+
+    function closeDeleteModal(submissionId) {
+        document.getElementById('deleteModal' + submissionId).style.display = 'none';
+    }
+
+      function confirmRequete(requeteId) {
+        document.getElementById('confirmRequeteModal' + requeteId).style.display = 'block';
+    }
+
+    function closeConfirmRequeteModal(requeteId) {
+        document.getElementById('confirmRequeteModal' + requeteId).style.display = 'none';
+    }
+</script>
+
+{% endblock %}

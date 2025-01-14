@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission PDF</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .section-title { font-weight: bold; margin-top: 20px; }
+        .details { margin: 10px 0; }
+        .details span { font-weight: bold; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #333;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;  /* Couleur verte pour l'en-tête */
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;  /* Couleur pour les lignes paires */
+        }
+        tr:nth-child(odd) {
+            background-color: #e9f5e9;  /* Couleur pour les lignes impaires */
+        }
+        tr:hover {
+            background-color: #ddd;  /* Surligne la ligne quand on passe la souris */
+        }
+        td {
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Financial Control Submission</h1>
+        <p>Submission ID: {{ submission.id }}</p>
+    </div>
+
+    <div class="details">
+        <div class="section-title">Request Details</div>
+        <p><span>Request Reference:</span> {{ submission.requete.reference }}</p>
+        <p><span>Company Name:</span> {{ submission.requete.company.name }}</p>
+        <p><span>Responsable:</span> {{ submission.requete.responsable.email }}</p>
+        <p><span>Consultant:</span> {{ submission.requete.consultant.email }}</p>
+        <p><span>Date:</span> {{ submission.requete.date }}</p>
+        <p><span>Completed:</span> {{ submission.requete.completed }}</p>
+    </div>
+
+    <div class="details">
+        <div class="section-title">Section 1: Documents de contrôle</div>
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Status</th>
+                <th>Comments</th>
+            </tr>
+            <tr>
+                <td>Grand Livre</td>
+                <td>{{ submission.grand_livre_status }}</td>
+                <td>{{ submission.grand_livre_comments }}</td>
+            </tr>
+            <tr>
+                <td>Balance Comptes</td>
+                <td>{{ submission.balance_comptes_status }}</td>
+                <td>{{ submission.balance_comptes_comments }}</td>
+            </tr>
+            <tr>
+                <td>Exhaustivité Pièces</td>
+                <td>{{ submission.exhaustivite_pieces_status }}</td>
+                <td>{{ submission.exhaustivite_pieces_comments }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="details">
+        <div class="section-title">Section 2: Diligences</div>
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Status</th>
+                <th>Comments</th>
+            </tr>
+            <tr>
+                <td>Titres Participation</td>
+                <td>{{ submission.titres_participation_status }}</td>
+                <td>{{ submission.titres_participation_comments }}</td>
+            </tr>
+            <tr>
+                <td>Comptes Filiales</td>
+                <td>{{ submission.comptes_filiales_status }}</td>
+                <td>{{ submission.comptes_filiales_comments }}</td>
+            </tr>
+            <tr>
+                <td>Cout Acquisition</td>
+                <td>{{ submission.cout_acquisition_status }}</td>
+                <td>{{ submission.cout_acquisition_comments }}</td>
+            </tr>
+            <tr>
+                <td>Depreciation Calc</td>
+                <td>{{ submission.depreciation_calc_status }}</td>
+                <td>{{ submission.depreciation_calc_comments }}</td>
+            </tr>
+            <tr>
+                <td>Evaluation Titres</td>
+                <td>{{ submission.evaluation_titres_status }}</td>
+                <td>{{ submission.evaluation_titres_comments }}</td>
+            </tr>
+            <tr>
+                <td>Depots Cautionnements</td>
+                <td>{{ submission.depots_cautionnements_status }}</td>
+                <td>{{ submission.depots_cautionnements_comments }}</td>
+            </tr>
+            <tr>
+                <td>Analyse Mouvements</td>
+                <td>{{ submission.analyse_mouvements_status }}</td>
+                <td>{{ submission.analyse_mouvements_comments }}</td>
+            </tr>
+            <tr>
+                <td>Prets Accordes</td>
+                <td>{{ submission.prets_accordes_status }}</td>
+                <td>{{ submission.prets_accordes_comments }}</td>
+            </tr>
+            <tr>
+                <td>Rapprochement</td>
+                <td>{{ submission.rapprochement_status }}</td>
+                <td>{{ submission.rapprochement_comments }}</td>
+            </tr>
+            <tr>
+                <td>Recensement Prets</td>
+                <td>{{ submission.recensement_prets_status }}</td>
+                <td>{{ submission.recensement_prets_comments }}</td>
+            </tr>
+            <tr>
+                <td>Cut Off</td>
+                <td>{{ submission.cut_off_status }}</td>
+                <td>{{ submission.cut_off_comments }}</td>
+            </tr>
+            <tr>
+                <td>Taux Interets</td>
+                <td>{{ submission.taux_interets_status }}</td>
+                <td>{{ submission.taux_interets_comments }}</td>
+            </tr>
+            <tr>
+                <td>Conventions Reglementees</td>
+                <td>{{ submission.conventions_reglementees_status }}</td>
+                <td>{{ submission.conventions_reglementees_comments }}</td>
+            </tr>
+            <tr>
+                <td>Etats Synthese</td>
+                <td>{{ submission.etats_synthese_status }}</td>
+                <td>{{ submission.etats_synthese_comments }}</td>
+            </tr>
+            <tr>
+                <td>Infos Etats</td>
+                <td>{{ submission.infos_etats_status }}</td>
+                <td>{{ submission.infos_etats_comments }}</td>
+            </tr>
+            <tr>
+                <td>Regles Methods</td>
+                <td>{{ submission.regles_methods_status }}</td>
+                <td>{{ submission.regles_methods_comments }}</td>
+            </tr>
+            <tr>
+                <td>Tableaux A2A3</td>
+                <td>{{ submission.tableaux_a2a3_status }}</td>
+                <td>{{ submission.tableaux_a2a3_comments }}</td>
+            </tr>
+            <tr>
+                <td>Tableaux B7B8</td>
+                <td>{{ submission.tableaux_b7b8_status }}</td>
+                <td>{{ submission.tableaux_b7b8_comments }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="details">
+        <div class="section-title">General Comments and Conclusion</div>
+        <p><span>General Comments:</span> {{ submission.general_comments }}</p>
+        <p><span>Conclusion:</span> {{ submission.conclusion }}</p>
+    </div>
+
+    <div class="details">
+        <div class="section-title">Submission Timestamp</div>
+        <p><span>Created At:</span> {{ submission.created_at }}</p>
+    </div>
+</body>
+</html>

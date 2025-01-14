@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission PDF</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .section-title { font-weight: bold; margin-top: 20px; }
+        .details { margin: 10px 0; }
+        .details span { font-weight: bold; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Financial Control Submission</h1>
+        <p>Submission ID: {{ submission.id }}</p>
+    </div>
+
+    <div class="details">
+        <div class="section-title">Request Details</div>
+        <p><span>Request Reference:</span> {{ submission.requete.reference }}</p>
+        <p><span>Company Name:</span> {{ submission.requete.company.name }}</p>
+        <p><span>Responsable:</span> {{ submission.requete.responsable.email }}</p>
+        <p><span>Consultant:</span> {{ submission.requete.consultant.email }}</p>
+        <p><span>Date:</span> {{ submission.requete.date }}</p>
+        <p><span>Completed:</span> {{ submission.requete.completed }}</p>
+    </div>
+
+    <div class="details">
+        <div class="section-title">Section 1: Documents de contrôle</div>
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Status</th>
+                <th>Comments</th>
+            </tr>
+            <tr>
+                <td>Grand Livre</td>
+                <td>{{ submission.grand_livre_status }}</td>
+                <td>{{ submission.grand_livre_comments }}</td>
+            </tr>
+            <tr>
+                <td>Balance Comptes</td>
+                <td>{{ submission.balance_comptes_status }}</td>
+                <td>{{ submission.balance_comptes_comments }}</td>
+            </tr>
+            <tr>
+                <td>Etat du stock</td>
+                <td>{{ submission.etat_stock_status }}</td>
+                <td>{{ submission.etat_stock_comments }}</td>
+            </tr>
+            <tr>
+                <td>Etat du provision</td>
+                <td>{{ submission.etat_provision_status }}</td>
+                <td>{{ submission.etat_provision_comments }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="details">
+        <div class="section-title">Section 2: Diligences</div>
+        <div class="section-title">2.1 Stocks à la clôture</div>
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Status</th>
+                <th>Comments</th>
+            </tr>
+            <tr>
+                <td>Inventaire des stocks</td>
+                <td>{{ submission.inventaire_stocks_status }}</td>
+                <td>{{ submission.inventaire_stocks_comments }}</td>
+            </tr>
+            <tr>
+                <td>Valorisation des stocks</td>
+                <td>{{ submission.valorisation_stocks_status }}</td>
+                <td>{{ submission.valorisation_stocks_comments }}</td>
+            </tr>
+            <tr>
+                <td>Conformité d'évaluation</td>
+                <td>{{ submission.conformite_evaluation_status }}</td>
+                <td>{{ submission.conformite_evaluation_comments }}</td>
+            </tr>
+        </table>
+        <div class="section-title">2.2 Dépréciation des stocks</div>
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Status</th>
+                <th>Comments</th>
+            </tr>
+            <tr>
+                <td>Contrôles arithmétiques provisions</td>
+                <td>{{ submission.controle_arithmetique_provision_status }}</td>
+                <td>{{ submission.controle_arithmetique_provision_comments }}</td>
+            </tr>
+            <tr>
+                <td>Rapprochement provisions documents</td>
+                <td>{{ submission.rapporochement_provision_docs_status }}</td>
+                <td>{{ submission.rapporochement_provision_docs_comments }}</td>
+            </tr>
+            <tr>
+                <td>Concordance solde provisions</td>
+                <td>{{ submission.concordance_solde_provisions_status }}</td>
+                <td>{{ submission.concordance_solde_provisions_comments }}</td>
+            </tr>
+        </table>
+        <div class="section-title">2.3 Etats de synthèse et liasse fiscale</div>
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Status</th>
+                <th>Comments</th>
+            </tr>
+            <tr>
+                <td>Description règles comptables</td>
+                <td>{{ submission.description_regles_comptables_status }}</td>
+                <td>{{ submission.description_regles_comptables_comments }}</td>
+            </tr>
+            <tr>
+                <td>Vérification dérogations méthodes</td>
+                <td>{{ submission.verification_derogations_methodes_status }}</td>
+                <td>{{ submission.verification_derogations_methodes_comments }}</td>
+            </tr>
+            <tr>
+                <td>Vérification sûretés engagements</td>
+                <td>{{ submission.verification_suretes_engagements_status }}</td>
+                <td>{{ submission.verification_suretes_engagements_comments }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="details">
+        <div class="section-title">General Comments and Conclusion</div>
+        <p><span>General Comments:</span> {{ submission.general_comments }}</p>
+        <p><span>Conclusion:</span> {{ submission.conclusion }}</p>
+    </div>
+
+    <div class="details">
+        <div class="section-title">Submission Timestamp</div>
+        <p><span>Created At:</span> {{ submission.created_at }}</p>
+    </div>
+</body>
+</html>

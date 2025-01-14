@@ -1,0 +1,283 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Loeni Complaint system">
+    <meta name="author" content="Creative Tim">
+    <title>LEONI</title>
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'img/brand/favicon.png' %}" type="image/png">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <!-- Icons -->
+    <link rel="stylesheet" href="{% static 'vendor/nucleo/css/nucleo.css' %}" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+    <!-- Argon CSS -->
+    <link rel="stylesheet" href="{% static 'css/argon.css?v=1.2.0' %}" type="text/css">
+  </head>
+
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Caprasimo&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+        * {
+            
+            font-family: "Poppins", sans-serif;
+        }
+
+          .text{
+            display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center;
+          }
+
+        .leoni{
+          font-weight: bold;font-size: 2em;color: white;margin-bottom:5% ;
+        }
+
+        .btn1{
+          width: 70%; padding: 5px; font-size: 20px; background-color: #002957f8; color: white; border: none; cursor: pointer;margin-top: 1%;
+        }
+
+
+          .flip-container {
+          perspective: 1000;
+        }
+        .flipper {
+          padding: 30px;
+          width: 50vh;
+          height:50vh;
+          position: relative;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+
+        background: rgba(0, 40, 87, 0.44);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+          -webkit-backdrop-filter: blur(4px);
+        border: 1px solid rgba(0, 40, 87, 0.21);
+          transition: 0.6s;
+          transform-style: preserve-3d;
+        }
+
+        .front, .back {
+          /*background-color: rgba(0,0,0,.3);*/
+          position: absolute;
+            padding:10px 30px;
+          top: 0;
+          left: 0;
+          right: 0;
+          
+          backface-visibility: hidden;
+        }
+
+        .front{
+          z-index: 2;
+          /* for firefox 31 */
+          transform: rotateY(0deg);
+        }
+
+        .back{
+            transform: rotateY(180deg);
+        }
+        .flip{
+            transform: rotateY(180deg);
+        }
+        input{
+            width:100%;
+            margin-bottom:15px;
+            height:40px;
+            box-sizing: border-box;
+            padding:10px;
+        }
+
+        .title{
+          text-align: center;
+        }
+        .flipbutton{
+          
+            text-decoration:none;
+            text-align:center !important;
+            width: min-content;
+            padding: 10px;
+        }
+
+        .ect{
+          font-size: 2.5em;color: white;margin-bottom: 15%;
+        }
+
+
+
+        /* Alignment styles */
+
+        body, html {
+          height: 100%;
+        }
+
+        body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+            
+            
+            background: #092756;
+            background: -moz-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%),-moz-linear-gradient(top, rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), -moz-linear-gradient(-45deg, #670d10 0%, #092756 100%);
+            background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -webkit-linear-gradient(top, rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -webkit-linear-gradient(-45deg, #670d10 0%,#092756 100%);
+            background: -o-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -o-linear-gradient(top, rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -o-linear-gradient(-45deg, #670d10 0%,#092756 100%);
+            background: -ms-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -ms-linear-gradient(top, rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -ms-linear-gradient(-45deg, #670d10 0%,#092756 100%);
+            background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), linear-gradient(to bottom, rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), linear-gradient(135deg, #670d10 0%,#092756 100%);
+        }
+
+        @media screen and (max-height: 700px) {
+            /* Adjustments for small screens */
+            .ect{
+              font-size: 2em;color: white;margin-bottom: 5%;
+            }
+
+            .leoni{
+          font-weight: bold;font-size: 2em;color: white;margin-bottom:2% ;
+        }
+            .flipper {
+              width: 50vw;
+            
+              margin: 200px;
+            }
+
+            .front, .back {
+              padding: 5px;
+            }
+
+          
+
+            .btn1 {
+              width: 50%; 
+              font-size: 15px; 
+              margin-top: 10px;
+            }
+
+            input {
+              height: 30px;
+              font-size: 14px;
+            }
+        }
+
+        @media screen and (max-height: 900px) {
+            /* Adjustments for small screens */
+            .ect{
+              font-size: 2em;color: white;margin-bottom: 5%;
+            }
+
+          
+        }
+
+    </style>
+    <style>
+
+        body {
+          font-family: Arial, sans-serif;
+        }
+
+        #language-selector {
+          position: absolute;
+          top: 20px; 
+          left: 10px; 
+          color: white;
+          background-color: #092756;
+          padding: 10px;
+          
+        }
+
+        #language-selector:hover ul {
+          display: block;
+        }
+
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: none;
+          position: absolute;
+          top: 30px;
+          left: 0;
+        
+          border: 1px solid #ccc;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        li {
+          padding: 10px;
+          cursor: pointer;
+        }
+
+        li:hover {
+          background-color: #3947df6f;
+        }
+
+        img {
+          width: 20px;
+          height: auto;
+          margin-right: 5px;
+        }
+    </style>
+
+
+
+<body style="background-image: url('{% static 'img/arch.jpg' %}'); background-size: cover;">
+  <div id="language-selector">
+      <!-- Language Selector Code -->
+  </div>
+  
+  <div class="flip-container">
+      <div class="flipper" id="flipper">
+          <div class="front text">
+              <h1 class="leoni">Bienvenue</h1> 
+              <p class="ml-md-2 ml-lg-3" style="font-size: 1.8em; line-height: 1.6; font-weight:400; margin-bottom: 10%;">
+                                            
+              </p>
+              <button class="flipbutton btn1" id="loginButton">Start</button>
+          </div>
+          <div class="back text">
+              <h1 class="leoni">Se connecter</h1>
+              <form method="post" action="{% url 'login' %}" style="max-width: 300px; margin: auto; margin-top: 30px;">
+                  {% csrf_token %}
+                  <label for="username" class="sr-only">Email</label>
+                  <input id="username" name="username" placeholder="Votre Email" type="text" class="form-input">
+
+                  <label for="password" class="sr-only">Mot de passe</label>
+                  <input id="password" name="password" placeholder="Mot de passe" type="password" class="form-input">
+
+                  <button type="submit" class="btn1">Login</button>
+              </form>
+              <a class="flipbutton" id="registerButton">S'inscrire</a>
+          </div>
+      </div>
+  </div>
+
+
+
+    <script>
+      var loginButton = document.getElementById("loginButton");
+      var registerButton = document.getElementById("registerButton");
+
+      loginButton.onclick = function(){
+        document.querySelector("#flipper").classList.toggle("flip");
+      }
+
+      registerButton.onclick = function(){
+        document.querySelector("#flipper").classList.toggle("flip");
+      }
+    </script>
+
+
+
+
+
+
+
+   
+</html>
